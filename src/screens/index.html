@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Quacker</title>
+    <link rel="stylesheet" href="../css/index.css" />
+  </head>
+  <body>
+    <div id="logo-header">
+      <img src="../../logo.png" alt="quack-header" />
+      <div id="user-info" style="display: none;">
+        <span>Welcome, <span id="user-name"><!-- User Name --></span>!</span>
+        <button id="logout-button">Logout</button>
+      </div>
+    </div>
+
+    <!-- Logout Button -->
+    <button id="logoutButton">Logout</button>
+
+    <script>
+        // Logout Function
+        function logout() {
+            // If using session tokens or cookies, clear them here
+            // For example: sessionStorage.clear();
+
+            // Redirect to the login page
+            window.location.href = '/';
+        }
+
+        // Bind Logout Function to Button
+        document.getElementById('logoutButton').addEventListener('click', logout);
+    </script>
+
+    <div id="main-page">
+      <div id="top-quacks">
+        <h1 id="top-quack-title">Top Quacks For You</h1>
+        <!-- Dynamic content will be loaded here -->
+      </div>
+      <div id="chat-box">
+        <div class="container">
+          <!-- Hide this form initially and show after login -->
+          <form class="add-quack-form" style="display: none;">
+            <input type="text" name="name" placeholder="User Name" class="input-text" />
+            <br />
+            <input type="text" name="quackText" placeholder="What's Quackin?" class="input-text" />
+            <br />
+            <input type="submit" value="Quack" class="submit" />
+          </form>
+        </div>
+        <script src="/src/index.js" type="module"></script>
+        <div id="quack-collection">
+          <!-- Quacks will be dynamically rendered here -->
+        </div>
+      </div>
+    </div>
+    <script>
+      // JavaScript to handle logout and conditional display
+      document.addEventListener("DOMContentLoaded", () => {
+        const userInfo = document.getElementById('user-info');
+        const addQuackForm = document.querySelector('.add-quack-form');
+        const logoutButton = document.getElementById('logout-button');
+    
+        // Example check for user login status
+        // This should be replaced with your actual logic for checking user login
+        const isLoggedIn = localStorage.getItem('isLoggedIn'); // Example condition
+        const userName = localStorage.getItem('userName'); // Example user name retrieval
+    
+        if (isLoggedIn) {
+          userInfo.style.display = 'block';
+          addQuackForm.style.display = 'block';
+          // Update user name
+          document.getElementById('user-name').textContent = userName;
+        }
+    
+        logoutButton.addEventListener('click', () => {
+          // Handle logout logic
+          // This should clear the session and redirect or refresh the page
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('userName');
+          window.location.reload(); // Refresh the page or redirect to login page
+        });
+      });
+    </script>
+
+    
+    
+  </body>
+</html>

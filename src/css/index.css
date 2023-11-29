@@ -1,0 +1,127 @@
+body {
+  margin: 0;
+  font-family:'Times New Roman', Times, serif;
+}
+
+#logo-header {
+  display: flex;
+  justify-content: inbetween;
+  background: #FFFADD;
+  opacity: .8;
+  height: 4rem;
+  padding: 1rem;
+}
+
+#main-page {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+#chat-box {
+  width: 70%;
+  height: 50rem;
+  background-color:white;
+  border-color: black;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+}
+
+#top-quacks {
+  width: 30%;
+  height: 40rem;
+  background-color:#FFFADD;
+  margin: 1rem;
+  margin-left: 0rem;
+  padding-left: 1rem;
+}
+
+#top-quack-item {
+  border-bottom: lightgray solid 1px;
+}
+
+#quack-header img {
+  height: 6rem;
+  width: auto;
+}
+
+#quack-collection {
+  margin: 1rem;
+  height: 40rem;
+  overflow-y:auto;
+}
+
+.card {
+  text-align: left;
+  border-bottom: lightgray solid 1px;
+  width: 90%;
+}
+
+.quack-avatar {
+  justify-self: center;
+  height: 12rem;
+  width: auto;
+}
+
+button {
+  position: relative;
+  background-color: #FFCC70;
+  border: none;
+  border-radius: 5px;
+  height: 3rem;
+  width: max-content;
+  color: whitesmoke;
+  font-size: 18px;
+  font-family: 'Times New Roman', Times, serif;
+  justify-self: center;
+}
+
+button:hover {
+  background-color: whitesmoke;
+  border: #FFCC70 solid 1px;
+  color: black;
+}
+
+.container {
+  padding: 1rem;
+  width: stretch;
+  height: auto;
+  display: block;
+  background: white;
+  opacity: .8;
+}
+
+.add-quack-form {
+  width: 80%;
+  border-bottom: lightgray solid 1px;
+  border-top: lightgray solid 1px;
+}
+
+.submit {
+  position: relative;
+  background-color: #FFCC70;
+  border-radius: 5px;
+  height: 2rem;
+  width: max-content;
+  color: whitesmoke;
+  font-size: 18px;
+  justify-self: center;
+  font-family:'Times New Roman', Times, serif;
+  margin: 3px;
+}
+
+.submit:hover {
+  background-color: whitesmoke;
+  border: #FFCC70 solid 1px;
+  color: black;
+}
+
+
+.input-text {
+  border: none;
+  height: 2rem;
+  width: 100%;
+  font-size: 18px;
+  font-family:'Times New Roman', Times, serif;
+  margin: 3px;
+}

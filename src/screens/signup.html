@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Form</title>
+    <link rel="stylesheet" href="../css/signup.css">
+</head>
+<body>
+    <form id="signup-form" onsubmit="handleSignup(event)">
+        <input type="text" id="username" class="input-field" placeholder="Username" required>
+        <input type="email" id="email" class="input-field" placeholder="Email" required>
+        <input type="password" id="password" class="input-field" placeholder="Password" required>
+        <input type="password" id="confirm_password" class="input-field" placeholder="Confirm Password" required>
+        <button type="submit" class="btn" id="signup-submit">Continue</button>
+    </form>
+    <div class="login-link"><a href="./index.html">Already registered? Login</a></div>
+
+    <!-- <script>
+        async function handleSignup(event) {
+          event.preventDefault();
+          const username = document.getElementById('username').value;
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          const confirmPassword = document.getElementById('confirm_password').value;
+      
+          if (password !== confirmPassword) {
+            console.error('Passwords do not match.');
+            return; // Early return if passwords do not match
+          }
+      
+          try {
+            const response = await fetch('http://localhost:3000/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username, email, password })
+            });
+      
+            if (response.ok) {
+              // Handle successful signup here
+              console.log('Signup successful');
+              window.location.href = '/'; // Redirect to login page
+            } else {
+              // Handle errors (like showing a message to the user)
+              const errorData = await response.json();
+              console.error('Signup failed:', errorData.error);
+            }
+          } catch (error) {
+            console.error('Error during signup:', error);
+          }
+        }
+      </script> -->
+      <script src="../index.js" type="module"></script>
+      
+    
+</body>
+</html>

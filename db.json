@@ -1,0 +1,82 @@
+{
+  "quacks": [
+    {
+      "id": 1,
+      "name": "Tim",
+      "likes": 7,
+      "postContent": "Just discovered a new coffee shop in my neighborhood, and it's a game-changer! ☕️ #CoffeeLover #HiddenGems"
+    },
+    {
+      "id": 2,
+      "name": "Buzz",
+      "likes": 11,
+      "postContent": "Spent the entire weekend binge-watching my favorite TV show. Now I need recommendations for what to watch next! 📺 #TVAddict #WeekendVibes"
+    },
+    {
+      "id": 3,
+      "name": "Pop",
+      "likes": 3,
+      "postContent": "Started a new book today, and I'm already hooked! 📚 Any book recommendations for my next read? #BookWorm #ReadingList"
+    },
+    {
+      "id": 4,
+      "name": "Slinky",
+      "likes": 4,
+      "postContent": "Trying out a new recipe tonight! Fingers crossed it turns out as good as it looks on Pinterest. 🍲 #CookingAdventures #Foodie"
+    },
+    {
+      "id": 5,
+      "name": "Rex",
+      "likes": 1,
+      "postContent": "Just finished a killer workout, and I'm feeling unstoppable! 💪 #FitnessMotivation #WorkoutWednesday"
+    },
+    {
+      "id": 6,
+      "name": "Sally",
+      "likes": 2,
+      "postContent": "Is it just me, or does time fly on weekends? Monday already? 😅 #WeekendBlues #TimeFlies"
+    },
+    {
+      "id": 7,
+      "name": "John",
+      "likes": 1,
+      "postContent": "Spontaneous road trip with friends! 🚗 Destination: Adventure. Let the good times roll! #RoadTrip #AdventureTime"
+    },
+    {
+      "id": 8,
+      "name": "Sky",
+      "likes": 1,
+      "postContent": "Caught the sunrise this morning, and it was absolutely breathtaking. Nature's beauty never ceases to amaze me. 🌅 #NatureLover #MorningInspiration"
+    },
+    {
+      "name": "sadd",
+      "image": "",
+      "likes": 5,
+      "id": 9
+    },
+    {
+      "name": "tfyftyfty",
+      "image": "",
+      "likes": 4,
+      "id": 10
+    },
+    {
+      "name": "williw s",
+      "postContent": "furck ths shidefst",
+      "likes": 3,
+      "id": 11
+    },
+    {
+      "likes": 0,
+      "id": 12
+    },
+    {
+      "likes": 0,
+      "id": 13
+    },
+    {
+      "likes": 0,
+      "id": 14
+    }
+  ]
+}
