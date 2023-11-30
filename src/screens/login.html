@@ -25,12 +25,17 @@
             // Handle successful login here
             // For example, redirect to the main page or store session data
             const result = await response.json();
-            const user = result.user;
-            
-            // Save user information in localStorage
-            localStorage.setItem('user', JSON.stringify(user));
-            
-            window.location.href = './index.html';
+            if (result.success) {
+              const user = result.user;
+              console.log('Login successful:', user);
+              // Save user information in localStorage
+              localStorage.setItem('user', JSON.stringify(user));
+              
+              window.location.href = './screens/index.html';
+            } else {
+              // Handle login failure
+              console.error('Login failed:', result.error);
+            } 
           } else {
             // Handle errors (like showing a message to the user)
             console.error('Login failed');

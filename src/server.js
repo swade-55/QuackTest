@@ -106,8 +106,8 @@ const server = http.createServer(async (req, res) => {
         const user = await db.loginUser(email, password);
         if (user) {
           console.log(`Login successful for user: ${email}`);
-          res.writeHead(302, { 'Location': '/index.html' });
-          res.end();
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, user }));
         } else {
           console.log(`Login failed for user: ${email}`);
           res.writeHead(401, { 'Content-Type': 'application/json' });
@@ -126,8 +126,8 @@ const server = http.createServer(async (req, res) => {
     });
     req.on('end', async () => {
       try {
-        const { email, password, username, id } = JSON.parse(body);
-        const result = await db.registerUser( email, password, username, id );
+        const { username, email, password, id } = JSON.parse(body);
+        const result = await db.registerUser( username, email, password, id );
         if (result) {
           res.writeHead(201, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ message: "Registration successful" }));
@@ -150,7 +150,6 @@ if (req.method === 'GET' && !pathname.startsWith('/api/') && !res.finished) {
   if (pathname === '/') {
     servePath = path.join(__dirname, './screens/login.html');
   } else {
-    console.log('here')
     // Serve other static files from the 'src' directory
     servePath = path.join(__dirname, '', pathname);
   }
