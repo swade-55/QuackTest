@@ -1,15 +1,15 @@
 class User {
-  constructor(username,userId,email,password){
+  constructor(username,userId,email){
     this.username = username;
     this.userId = userId;
     this.email = email;
-    this.password = password;
   }
 }
 
 class QuackApi {
   constructor() {
     this.addQuack = false;
+    this.user = null;
     console.log('QuackApi instance created.');
   }
 
@@ -46,6 +46,14 @@ class QuackApi {
       likeButton.textContent = 'Like';
       commentInput.placeholder = 'Add a comment';
       commentButton.textContent = 'Comment';
+
+      quackName.classList.add('quack-name'); 
+      quackContent.classList.add('quack-content'); 
+      quackLikes.classList.add('quack-likes'); 
+      deleteButton.classList.add('delete-button'); 
+      likeButton.classList.add('like-button');
+      commentInput.classList.add('comment-input');
+      commentButton.classList.add('comment-button');
 
       deleteButton.onclick = () => {
         console.log('Delete button clicked for quackId:', quack._id);
@@ -223,54 +231,18 @@ class QuackApi {
     });
   }
 
-  // async registerUser(email, password,username,id) {
-  //   try {
-  //     const response = await fetch('http://localhost:3000/register', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({ email, password, username, id })
-  //     });
-
-  //     if (response.ok) {
-  //       const result = await response.json();
-  //       console.log("Registration successful:", result);
-  //       // Handle post-registration logic (like redirecting to a login page)
-  //     } else {
-  //       throw new Error('Error during registration');
-  //     }
-  //   } catch (error) {
-  //     console.error("Error registering user:", error);
-  //   }
-  // }
-
-  // async loginUser(email, password) {
-  //   try {
-  //     const response = await fetch('http://localhost:3000/login', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({ email, password })
-  //     });
-
-  //     if (response.ok) {
-  //       const result = await response.json();
-  //       console.log("Login successful:", result);
-  //       // Handle post-login logic (like storing session data and redirecting to the main page)
-  //     } else {
-  //       throw new Error('Error during login');
-  //     }
-  //   } catch (error) {
-  //     console.error("Error logging in user:", error);
-  //   }
-  // }
-  
-  
-  
+  displayuserInfo(username) {
+    document.getElementById('user-name').textContent = username;
+  }
 
   init() {
+    const jsonString = localStorage.getItem('user');
+    const userjson = JSON.parse(jsonString);
+
+    const userobj = new User(userjson.username, userjson.id, userjson.email);
+    this.user = userobj;
+    console.log(this.user);
+    this.displayuserInfo(this.user.username);
     this.fetchQuacks();
     this.fetchTopQuacks();
   }
@@ -304,7 +276,7 @@ const addQuackForm = document.querySelector('.add-quack-form');
     addQuackForm.style.display = 'block'; // This will make sure the form is visible
     addQuackForm.addEventListener('submit', async function(event) {
       event.preventDefault(); // This prevents the default form submission
-      const name = this.name.value;
+      const name = quackApi.user.username;
       const quackText = this.quackText.value;
       if(name && quackText) {
         await quackApi.addNewQuack({ name, quackText });

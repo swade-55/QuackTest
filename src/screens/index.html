@@ -8,27 +8,23 @@
   <body>
     <div id="logo-header">
       <img src="../Images/logo.png" alt="quack-header" />
-      <div id="user-info" style="display: none;">
+      <div id="user-info">
         <span>Welcome, <span id="user-name"><!-- User Name --></span>!</span>
-        <button id="logout-button">Logout</button>
+        <input id="logout_button" type="submit" value="Logout" class="submit" />
       </div>
     </div>
-
-    <!-- Logout Button -->
-    <button id="logoutButton">Logout</button>
 
     <script>
         // Logout Function
         function logout() {
             // If using session tokens or cookies, clear them here
-            // For example: sessionStorage.clear();
-
+            localStorage.removeItem('user');
             // Redirect to the login page
             window.location.href = '/';
         }
 
         // Bind Logout Function to Button
-        document.getElementById('logoutButton').addEventListener('click', logout);
+        document.getElementById('logout_button').addEventListener('click', logout);
     </script>
 
     <div id="main-page">
@@ -40,11 +36,9 @@
         <div class="container">
           <!-- Hide this form initially and show after login -->
           <form class="add-quack-form" style="display: none;">
-            <input type="text" name="name" placeholder="User Name" class="input-text" />
-            <br />
             <input type="text" name="quackText" placeholder="What's Quackin?" class="input-text" />
             <br />
-            <input type="submit" value="Quack" class="submit" />
+            <input id="addquack_button" type="submit" value="Quack" class="submit" />
           </form>
         </div>
         <script src="../index.js" type="module"></script>
@@ -71,18 +65,8 @@
           // Update user name
           document.getElementById('user-name').textContent = userName;
         }
-    
-        logoutButton.addEventListener('click', () => {
-          // Handle logout logic
-          // This should clear the session and redirect or refresh the page
-          localStorage.removeItem('isLoggedIn');
-          localStorage.removeItem('userName');
-          window.location.reload(); // Refresh the page or redirect to login page
-        });
       });
     </script>
 
-    
-    
   </body>
 </html>
