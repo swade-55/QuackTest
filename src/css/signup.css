@@ -19,7 +19,7 @@ body {
     text-align: center;
 }
 .input-field {
-    width: 100%;
+    width: 92%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
@@ -39,4 +39,15 @@ body {
     text-align: center;
     margin-top: 10px;
     font-size: 14px;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.logo img {
+    height: 5rem;
 }

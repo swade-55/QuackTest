@@ -8,6 +8,9 @@
 </head>
 <body>
   <div class="signup-container">
+    <div class="logo">
+      <img src="../Images/logo.png" alt="Quacker Logo" />
+    </div>
     <div class="signup-header">Signup to get started</div>
     <form id="signup-form" onsubmit="handleSignup(event)">
         <input type="text" id="username" class="input-field" placeholder="Username" required>
@@ -16,7 +19,7 @@
         <input type="password" id="confirm_password" class="input-field" placeholder="Confirm Password" required>
         <button type="submit" class="btn" id="signup-submit">Continue</button>
     </form>
-    <div class="login-link"><a href="./index.html">Already registered? Login</a></div>
+    <div class="login-link"><a href="./login.html">Already registered? Login</a></div>
   </div>
     <script>
         async function handleSignup(event) {

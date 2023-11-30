@@ -19,7 +19,8 @@ class QuackApi {
     try {
       const response = await fetch('http://localhost:3000/quacks');
       const quacks = await response.json();
-      this.renderQuacks(quacks);
+      const reversedQuacks = quacks.reverse(); 
+      this.renderQuacks(reversedQuacks);
     } catch (error) {
       console.error("Error fetching quacks:", error);
     }
