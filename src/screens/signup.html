@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../css/signup.css">
 </head>
 <body>
+  <div class="signup-container">
+    <div class="signup-header">Signup to get started</div>
     <form id="signup-form" onsubmit="handleSignup(event)">
         <input type="text" id="username" class="input-field" placeholder="Username" required>
         <input type="email" id="email" class="input-field" placeholder="Email" required>
@@ -15,15 +17,15 @@
         <button type="submit" class="btn" id="signup-submit">Continue</button>
     </form>
     <div class="login-link"><a href="./index.html">Already registered? Login</a></div>
-
-    <!-- <script>
+  </div>
+    <script>
         async function handleSignup(event) {
           event.preventDefault();
           const username = document.getElementById('username').value;
           const email = document.getElementById('email').value;
           const password = document.getElementById('password').value;
           const confirmPassword = document.getElementById('confirm_password').value;
-      
+          const id = random.randint(10000)
           if (password !== confirmPassword) {
             console.error('Passwords do not match.');
             return; // Early return if passwords do not match
@@ -33,7 +35,7 @@
             const response = await fetch('http://localhost:3000/register', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ username, email, password })
+              body: JSON.stringify({ username, email, password, id })
             });
       
             if (response.ok) {
@@ -49,9 +51,6 @@
             console.error('Error during signup:', error);
           }
         }
-      </script> -->
-      <script src="../index.js" type="module"></script>
-      
-    
+      </script> 
 </body>
 </html>

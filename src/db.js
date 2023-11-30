@@ -7,6 +7,7 @@ const dbName = 'quackdb'; // Your database name
 const client = new MongoClient(url);
 
 
+connectDB();
 // Define your functions (login, makePost, etc.)
 
 // MongoDB setup
@@ -27,10 +28,6 @@ async function registerUser(username, email, password) {
   const result = await usersCollection.insertOne({ username, email, password }); // Storing the password directly
   return result.insertedId; // Return the insertedId if registration is successful
 }
-
-
-
-connectDB();
 
 // Login function
 async function loginUser(email, password) {

@@ -10,7 +10,6 @@ class User {
 class QuackApi {
   constructor() {
     this.addQuack = false;
-    this.user = null;
     console.log('QuackApi instance created.');
   }
 
@@ -224,49 +223,49 @@ class QuackApi {
     });
   }
 
-  async registerUser(email, password,username,id) {
-    try {
-      const response = await fetch('http://localhost:3000/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password, username, id })
-      });
+  // async registerUser(email, password,username,id) {
+  //   try {
+  //     const response = await fetch('http://localhost:3000/register', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({ email, password, username, id })
+  //     });
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Registration successful:", result);
-        // Handle post-registration logic (like redirecting to a login page)
-      } else {
-        throw new Error('Error during registration');
-      }
-    } catch (error) {
-      console.error("Error registering user:", error);
-    }
-  }
+  //     if (response.ok) {
+  //       const result = await response.json();
+  //       console.log("Registration successful:", result);
+  //       // Handle post-registration logic (like redirecting to a login page)
+  //     } else {
+  //       throw new Error('Error during registration');
+  //     }
+  //   } catch (error) {
+  //     console.error("Error registering user:", error);
+  //   }
+  // }
 
-  async loginUser(email, password) {
-    try {
-      const response = await fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
+  // async loginUser(email, password) {
+  //   try {
+  //     const response = await fetch('http://localhost:3000/login', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({ email, password })
+  //     });
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Login successful:", result);
-        // Handle post-login logic (like storing session data and redirecting to the main page)
-      } else {
-        throw new Error('Error during login');
-      }
-    } catch (error) {
-      console.error("Error logging in user:", error);
-    }
-  }
+  //     if (response.ok) {
+  //       const result = await response.json();
+  //       console.log("Login successful:", result);
+  //       // Handle post-login logic (like storing session data and redirecting to the main page)
+  //     } else {
+  //       throw new Error('Error during login');
+  //     }
+  //   } catch (error) {
+  //     console.error("Error logging in user:", error);
+  //   }
+  // }
   
   
   
@@ -280,27 +279,26 @@ class QuackApi {
 const quackApi = new QuackApi();
 document.addEventListener("DOMContentLoaded", () => {
 quackApi.init()
-
-// Add event listeners for the registration and login forms
-const registrationForm = document.getElementById('registration-form');
-const loginForm = document.getElementById('login-form');
-const registerbutton = document.getElementById('signup-submit');
-registerbutton.addEventListener('click', async function(event) {
-  event.preventDefault();
-  const email = this.email.value;
-  const password = this.password.value;
-  const username = this.username.value;
-  const id = random.randint(10000)
-  await quackApi.registerUser(email, password, username,id);
-});
-if (loginForm) {
-  loginForm.addEventListener('submit', async function(event) {
-    event.preventDefault();
-    const email = this.email.value;
-    const password = this.password.value;
-    await quackApi.loginUser(email, password); // This calls the correct loginUser method
-  });
-}
+// // Add event listeners for the registration and login forms
+// const registrationForm = document.getElementById('registration-form');
+// const loginForm = document.getElementById('login-form');
+// const registerbutton = document.getElementById('signup-submit');
+// registerbutton.addEventListener('click', async function(event) {
+//   event.preventDefault();
+//   const email = this.email.value;
+//   const password = this.password.value;
+//   const username = this.username.value;
+//   const id = random.randint(10000)
+//   await quackApi.registerUser(email, password, username,id);
+// });
+// if (loginForm) {
+//   loginForm.addEventListener('submit', async function(event) {
+//     event.preventDefault();
+//     const email = this.email.value;
+//     const password = this.password.value;
+//     await quackApi.loginUser(email, password); // This calls the correct loginUser method
+//   });
+// }
 const addQuackForm = document.querySelector('.add-quack-form');
   if (addQuackForm) {
     addQuackForm.style.display = 'block'; // This will make sure the form is visible

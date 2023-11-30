@@ -24,6 +24,11 @@
           if (response.ok) {
             // Handle successful login here
             // For example, redirect to the main page or store session data
+            const result = await response.json();
+            const user = result.user;
+            
+            // Save user information in localStorage
+            localStorage.setItem('user', JSON.stringify(user));
             
             window.location.href = './index.html';
           } else {
@@ -39,7 +44,7 @@
   <body>
     <div class="container">
       <div class="logo">
-        <img src="../../logo.png" alt="Quacker Logo" />
+        <img src="../Images/logo.png" alt="Quacker Logo" />
       </div>
       <h1>Login</h1>
       <p>to get started</p>

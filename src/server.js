@@ -2,7 +2,7 @@ const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
-const quackApi = require('./db'); // Ensure this path is correct
+const db = require('./db'); // Ensure this path is correct
 const bcrypt = require('bcrypt'); // Only necessary if you're handling passwords
 
 const port = process.env.PORT || 3000;
@@ -31,7 +31,7 @@ const server = http.createServer(async (req, res) => {
   // API endpoint logic
   if (pathname === '/quacks' && req.method === 'GET') {
     try {
-      const quacks = await quackApi.getAllQuacks();
+      const quacks = await db.getAllQuacks();
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(quacks));
     } catch (error) {
@@ -40,7 +40,7 @@ const server = http.createServer(async (req, res) => {
     }
   } else if (pathname === '/top-quacks' && req.method === 'GET') {
     try {
-      const topQuacks = await quackApi.getTopFiveQuacks();
+      const topQuacks = await db.getTopFiveQuacks();
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(topQuacks));
     } catch (error) {
@@ -55,7 +55,7 @@ const server = http.createServer(async (req, res) => {
     req.on('end', async () => {
       try {
         const quackData = JSON.parse(body);
-        const newQuack = await quackApi.addNewQuack(quackData);
+        const newQuack = await db.addNewQuack(quackData);
         res.writeHead(201, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(newQuack));
       } catch (error) {
@@ -71,7 +71,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
     try {
-      await quackApi.deletePost(quackId);
+      await db.deletePost(quackId);
       res.writeHead(204);
       res.end();
     } catch (error) {
@@ -86,7 +86,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
     try {
-      const updatedQuack = await quackApi.incrementLikes(quackId);
+      const updatedQuack = await db.incrementLikes(quackId);
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(updatedQuack));
     } catch (error) {
@@ -103,7 +103,7 @@ const server = http.createServer(async (req, res) => {
         const { email, password } = JSON.parse(body);
         console.log(`Login attempt with email: ${email} and password: ${password}`); // Log credentials
 
-        const user = await quackApi.loginUser(email, password);
+        const user = await db.loginUser(email, password);
         if (user) {
           console.log(`Login successful for user: ${email}`);
           res.writeHead(302, { 'Location': '/index.html' });
@@ -127,7 +127,7 @@ const server = http.createServer(async (req, res) => {
     req.on('end', async () => {
       try {
         const { email, password, username, id } = JSON.parse(body);
-        const result = await quackApi.registerUser( email, password, username, id );
+        const result = await db.registerUser( email, password, username, id );
         if (result) {
           res.writeHead(201, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ message: "Registration successful" }));
