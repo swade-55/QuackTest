@@ -22,15 +22,17 @@ async function connectDB() {
 
 // const bcrypt = require('bcrypt');
 
-async function registerUser(username, email, password) {
+async function registerUser(username, email, password, id) {
   // ... other code
+  console.log("saving: " + email + ", " + password);
   const usersCollection = client.db("quackdb").collection("users");
-  const result = await usersCollection.insertOne({ username, email, password }); // Storing the password directly
+  const result = await usersCollection.insertOne({ username, email, password, id }); // Storing the password directly
   return result.insertedId; // Return the insertedId if registration is successful
 }
 
 // Login function
 async function loginUser(email, password) {
+  console.log("logging in: " + email + ", " + password);
   const usersCollection = client.db("quackdb").collection("users");
   const user = await usersCollection.findOne({ email });
 
