@@ -119,6 +119,28 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify({ error: error.message }));
       }
     });
+  }else if (pathname === '/add-comment' && req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+    req.on('end', async () => {
+      try {
+        const { quackId, comment } = JSON.parse(body);
+        const result = await db.addComment(quackId, comment);
+        if (result) {
+          res.writeHead(201, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ message: "comment added successfully" }));
+        } else {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: "adding failed" }));
+        }
+      } catch (error) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: error.message }));
+      }
+    });
+
   } else if (pathname === '/register' && req.method === 'POST') {
     let body = '';
     req.on('data', chunk => {

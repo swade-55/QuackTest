@@ -59,9 +59,20 @@ body {
 }
 
 #quack-collection {
+  width: 80%;
   margin: 1rem;
   height: 40rem;
   overflow-y:auto;
+}
+
+#feed-title {
+  margin: 1rem;
+}
+
+.quack-post-form {
+  margin-top: 1%;
+  padding-bottom: 1%;
+  border-bottom: lightgray solid 1px;
 }
 
 .card {
@@ -76,7 +87,7 @@ body {
   width: auto;
 }
 
-button {
+/* button {
   position: relative;
   background-color: #FFCC70;
   border: none;
@@ -93,7 +104,7 @@ button:hover {
   background-color: whitesmoke;
   border: #FFCC70 solid 1px;
   color: black;
-}
+} */
 
 .container {
   padding: 1rem;
@@ -123,6 +134,11 @@ button:hover {
   margin: 3px;
 }
 
+#post-footer {
+  display: flex;
+  justify-content:flex-start;
+}
+
 .submit:hover {
   background-color: whitesmoke;
   border: #FFCC70 solid 1px;
@@ -138,4 +154,156 @@ button:hover {
   font-size: 18px;
   font-family:'Times New Roman', Times, serif;
   margin: 3px;
+}
+
+.quack-likes {
+  padding-left: 1%;
+  margin-right: 2%;
+}
+
+.quack-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1da1f2;
+  margin-bottom: 5px;
+}
+
+.quack-content {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.heart-icon {
+  color: #ccc; /* Default color for the heart */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.heart-button {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.heart-button:hover .heart-icon {
+  color: #e74c3c; /* Red color on hover */
+}
+
+.comment-button {
+  background: none;
+  border: none;
+  padding: 0; 
+}
+
+.comment-icon {
+  color: #ccc; /* Default color for the heart */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.comment-button:hover .comment-icon {
+  color:black; /* Red color on hover */
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 30px;
+}
+
+.quack-buttons {
+  margin-top: 10px;
+}
+
+.like-button,
+.comment-button {
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.comment-input {
+  padding: 10px;
+  border: 1px solid #e1e8ed;
+  border-radius: 5px;
+  margin-right: 10px;
+  width: 200px;
+}
+
+.delete-button:hover,
+.comment-button:hover {
+  filter: brightness(1.2);
+}
+
+.dropbtn {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Style the dropdown links */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color on hover */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Show the dropdown content when the dropdown button is clicked */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.comment-section {
+  display: none;
+  margin-top: 10px;
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+}
+
+.comment-list li {
+  margin-bottom: 5px;
+}
+
+.comment-user {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.comment-text {
+  margin-left: 16px; /* Add some indentation */
+}
+
+
+@media (max-width: 600px) {
+  .quack-container {
+    padding: 10px;
+  }
+
+  .quack-buttons {
+    margin-top: 8px;
+  }
 }
