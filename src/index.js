@@ -29,47 +29,70 @@ class QuackApi {
   renderQuacks(quacks) {
     const quackCollection = document.getElementById('quack-collection');
     quackCollection.innerHTML = ''; // Clear existing quacks
-
+  
     quacks.forEach(quack => {
+      // Create a div for each quack
       const quackDiv = document.createElement('div');
-      const quackName = document.createElement('h3');
-      const quackContent = document.createElement('p');
-      const quackLikes = document.createElement('p');
-      const deleteButton = document.createElement('button');
-      const likeButton = document.createElement('button');
-      const commentInput = document.createElement('input');
-      const commentButton = document.createElement('button');
+      quackDiv.classList.add('quack-element'); // Add a class for styling if needed
+  
+      // Populate the quack information
+      quackDiv.innerHTML = `
+      <div class="quack-post-form">
+        <div class="post-header">
+          <h3 class="quack-name">${quack.name}</h3>
+          <div class="dropdown">
+            <button class="dropbtn">&#8942;</button>
+            <div class="dropdown-content">
+              <a href="#" class="delete-button">Delete</a>
+            </div>
+         </div>
+        </div>  
+        <p class="quack-content">${quack.postContent}</p>
+  
+        <div id="post-footer">
+          <!-- Like Button as Heart -->
+          <button class="heart-button">
+            <i class="far fa-heart heart-icon"></i>
+          </button>
 
-      quackName.textContent = quack.name;
-      quackContent.textContent = quack.postContent;
-      quackLikes.textContent = `Likes: ${quack.likeCount}`;
-      deleteButton.textContent = 'Delete';
-      likeButton.textContent = 'Like';
-      commentInput.placeholder = 'Add a comment';
-      commentButton.textContent = 'Comment';
+          <p class="quack-likes">${quack.likeCount}</p>
+    
+          <!-- Comment Button -->
+          <button class="comment-button">
+            <i class="far fa-comment comment-icon"></i>
+          </button>
+        </div>
+  
+        <!-- Comment Section -->
+        <div id="comment-section-${quack._id}" class="comment-section">
+          <input type="text" class="comment-input" placeholder="Add a comment">
+          <button id="addquack_button" class="send-comment-button" onclick="sendComment('${quack._id}')">Send</button>
+        
+          <!-- List of Comments -->
+          <ul class="comment-list" id="comment-list-${quack._id}"></ul>
+        </div>
+      </div>
+      `;
+      //incriment likes
+      const likeButton = quackDiv.querySelector('.heart-button');
+      likeButton.addEventListener('click', () => {
+        this.incrementLikes(quack._id);
+      });
 
-      quackName.classList.add('quack-name'); 
-      quackContent.classList.add('quack-content'); 
-      quackLikes.classList.add('quack-likes'); 
-      deleteButton.classList.add('delete-button'); 
-      likeButton.classList.add('like-button');
-      commentInput.classList.add('comment-input');
-      commentButton.classList.add('comment-button');
-
-      deleteButton.onclick = () => {
+      //delete post
+      const deleteButton = quackDiv.querySelector('.delete-button');
+      deleteButton.addEventListener('click', () => {
         console.log('Delete button clicked for quackId:', quack._id);
         this.deleteQuack(quack._id);
-      };
-      likeButton.onclick = () => this.incrementLikes(quack._id);
-      commentButton.onclick = () => this.addComment(quack._id, commentInput.value);
+      })
 
-      quackDiv.appendChild(quackName);
-      quackDiv.appendChild(quackContent);
-      quackDiv.appendChild(quackLikes);
-      quackDiv.appendChild(deleteButton);
-      quackDiv.appendChild(likeButton);
-      quackDiv.appendChild(commentInput);
-      quackDiv.appendChild(commentButton);
+      //toggle the comment section
+      const commentButton = quackDiv.querySelector('.comment-button');
+      commentButton.addEventListener('click', () => {
+        const commentSection = document.getElementById(`comment-section-${quack._id}`);
+        commentSection.style.display = commentSection.style.display === 'none' ? 'block' : 'none';
+      })
+
       quackCollection.appendChild(quackDiv);
     });
   }

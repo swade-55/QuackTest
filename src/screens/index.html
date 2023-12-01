@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>Quacker</title>
     <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
   </head>
   <body>
     <div id="logo-header">
@@ -34,40 +36,18 @@
       </div>
       <div id="chat-box">
         <div class="container">
-          <h3>Feed</h3>
-          <!-- Hide this form initially and show after login -->
-          <form class="add-quack-form" style="display: none;">
+          <form class="add-quack-form">
             <input type="text" name="quackText" placeholder="What's Quackin?" class="input-text" />
             <br />
             <input id="addquack_button" type="submit" value="Quack" class="submit" />
           </form>
         </div>
         <script src="../index.js" type="module"></script>
+        <h3 id="feed-title">Feed</h3>
         <div id="quack-collection">
-          <!-- Quacks will be dynamically rendered here -->
+            <!-- renders the quacks here by calling it in the scripts dynamically -->
         </div>
       </div>
     </div>
-    <script>
-      // JavaScript to handle logout and conditional display
-      document.addEventListener("DOMContentLoaded", () => {
-        const userInfo = document.getElementById('user-info');
-        const addQuackForm = document.querySelector('.add-quack-form');
-        const logoutButton = document.getElementById('logout-button');
-    
-        // Example check for user login status
-        // This should be replaced with your actual logic for checking user login
-        const isLoggedIn = localStorage.getItem('isLoggedIn'); // Example condition
-        const userName = localStorage.getItem('userName'); // Example user name retrieval
-    
-        if (isLoggedIn) {
-          userInfo.style.display = 'block';
-          addQuackForm.style.display = 'block';
-          // Update user name
-          document.getElementById('user-name').textContent = userName;
-        }
-      });
-    </script>
-
   </body>
 </html>
