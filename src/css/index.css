@@ -230,7 +230,7 @@ button:hover {
 .comment-input {
   padding: 10px;
   border: 1px solid #e1e8ed;
-  border-radius: 20px;
+  border-radius: 5px;
   margin-right: 10px;
   width: 200px;
 }
@@ -286,6 +286,15 @@ button:hover {
 
 .comment-list li {
   margin-bottom: 5px;
+}
+
+.comment-user {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.comment-text {
+  margin-left: 16px; /* Add some indentation */
 }
 
 

@@ -29,12 +29,11 @@ class QuackApi {
   renderQuacks(quacks) {
     const quackCollection = document.getElementById('quack-collection');
     quackCollection.innerHTML = ''; // Clear existing quacks
-  
+
     quacks.forEach(quack => {
       // Create a div for each quack
       const quackDiv = document.createElement('div');
       quackDiv.classList.add('quack-element'); // Add a class for styling if needed
-  
       // Populate the quack information
       quackDiv.innerHTML = `
       <div class="quack-post-form">
@@ -66,13 +65,21 @@ class QuackApi {
         <!-- Comment Section -->
         <div id="comment-section-${quack._id}" class="comment-section">
           <input type="text" class="comment-input" placeholder="Add a comment">
-          <button id="addquack_button" class="send-comment-button" onclick="sendComment('${quack._id}')">Send</button>
+          <button id="addquack_button" class="send-comment-button">Send</button>
         
           <!-- List of Comments -->
           <ul class="comment-list" id="comment-list-${quack._id}"></ul>
         </div>
       </div>
       `;
+
+      const commentList = quackDiv.querySelector(`#comment-list-${quack._id}`);
+      quack.comments.forEach(comment => {
+        const commentItem = document.createElement('li');
+        commentItem.textContent = comment;
+        commentList.appendChild(commentItem);
+      });
+
       //incriment likes
       const likeButton = quackDiv.querySelector('.heart-button');
       likeButton.addEventListener('click', () => {
@@ -91,6 +98,15 @@ class QuackApi {
       commentButton.addEventListener('click', () => {
         const commentSection = document.getElementById(`comment-section-${quack._id}`);
         commentSection.style.display = commentSection.style.display === 'none' ? 'block' : 'none';
+      })
+
+      //function to add comment on click of button
+      const sendCommentButton = quackDiv.querySelector('.send-comment-button');
+      sendCommentButton.addEventListener('click', () => {
+        const commentInput = document.querySelector(`#comment-section-${quack._id} .comment-input`);
+        const commentValue = commentInput.value;
+        console.log('adding comment: ', commentValue);
+        this.addComment(quack._id, commentValue);
       })
 
       quackCollection.appendChild(quackDiv);
@@ -128,9 +144,9 @@ class QuackApi {
       // Construct the newQuack object in the desired format
       const newQuack = {
         name: quackObject.name,
-        postContent: quackObject.quackText, // Assuming you're sending quackText from the client
-        likeCount: 0, // Initialize likeCount to 0 for a new quack
-        comments: [] // Initialize an empty array for comments
+        postContent: quackObject.quackText, 
+        likeCount: 0, 
+        comments: []
       };
     
   
