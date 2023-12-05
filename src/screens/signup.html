@@ -28,19 +28,15 @@
           const email = document.getElementById('email').value;
           const password = document.getElementById('password').value;
           const confirmPassword = document.getElementById('confirm_password').value;
-          const min = 1000;
-          const max = 10000;
-          const id = Math.floor(Math.random() * (max - min + 1)) + min;
           if (password !== confirmPassword) {
             console.error('Passwords do not match.');
             return; // Early return if passwords do not match
           }
-      
           try {
             const response = await fetch('http://localhost:3000/register', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ username, email, password, id })
+              body: JSON.stringify({ username, email, password})
             });
       
             if (response.ok) {

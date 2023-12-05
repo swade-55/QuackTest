@@ -143,10 +143,11 @@ class QuackApi {
     try {
       // Construct the newQuack object in the desired format
       const newQuack = {
-        name: quackObject.name,
+        nameUser: quackObject.name,
         postContent: quackObject.quackText, 
         likeCount: 0, 
-        comments: []
+        comments: [],
+        likeCountUser: []
       };
     
   
