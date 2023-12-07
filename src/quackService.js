@@ -1,5 +1,5 @@
 const url = require('url');
-const db = require('./quackDB'); // Adjust this path as needed
+const db = require('./quackDB'); 
 
 async function quackService(req, res) {
     const parsedUrl = url.parse(req.url, true);

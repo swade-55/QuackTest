@@ -19,20 +19,17 @@
     <script>
         // Logout Function
         function logout() {
-            // If using session tokens or cookies, clear them here
             localStorage.removeItem('user');
-            // Redirect to the login page
             window.location.href = '/';
         }
 
-        // Bind Logout Function to Button
         document.getElementById('logout_button').addEventListener('click', logout);
     </script>
 
     <div id="main-page">
       <div id="top-quacks">
         <h1 id="top-quack-title">Top Quacks For You</h1>
-        <!-- Dynamic content will be loaded here -->
+        <!-- Dynamic content will be loaded here from index.js -->
       </div>
       <div id="chat-box">
         <div class="container">
@@ -45,7 +42,7 @@
         <script src="../index.js" type="module"></script>
         <h3 id="feed-title">Feed</h3>
         <div id="quack-collection">
-            <!-- renders the quacks here by calling it in the scripts dynamically -->
+            <!-- renders the quacks dynamically from index.js -->
         </div>
       </div>
     </div>

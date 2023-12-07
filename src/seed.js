@@ -1,6 +1,5 @@
 const { MongoClient } = require('mongodb');
 
-// Connection URL and Database Name
 const url = 'mongodb+srv://swade:iam@cluster0.ig7di0j.mongodb.net/?retryWrites=true&w=majority';
 const dbName = 'quackdb';
 
@@ -13,13 +12,11 @@ async function seedDB() {
 
     const db = client.db(dbName);
 
-    // Prepare 20 quacks with placeholder data
     const quacks = Array.from({ length: 20 }, (v, i) => ({
       name: `Quack ${i + 1}`,
       postContent: `Content of quack ${i + 1}.`,
-      likeCount: Math.floor(Math.random() * 100), // Random like count for variety
+      likeCount: Math.floor(Math.random() * 100), 
       comments: [
-        // You can add comments here if needed
       ]
     }));
 

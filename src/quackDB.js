@@ -2,13 +2,12 @@ const { MongoClient, ObjectId } = require('mongodb');
 
 
 // MongoDB setup
-const url = 'mongodb+srv://swade:iam@cluster0.ig7di0j.mongodb.net/?retryWrites=true&w=majority'; // Replace with your MongoDB URL
-const dbName = 'quackdb'; // Your database name
+const url = 'mongodb+srv://swade:iam@cluster0.ig7di0j.mongodb.net/?retryWrites=true&w=majority';
+const dbName = 'quackdb'; 
 const client = new MongoClient(url);
 
 
 connectDB();
-// Define your functions (login, makePost, etc.)
 
 // MongoDB setup
 async function connectDB() {

@@ -20,14 +20,12 @@ const mimeType = {
     '.svg': 'image/svg+xml',
     '.pdf': 'application/pdf',
     '.doc': 'application/msword',
-    // Add other mime types as needed
 };
 
 const server = http.createServer(async (req, res) => {
     const parsedUrl = url.parse(req.url, true);
     const pathname = parsedUrl.pathname;
 
-    // Route API requests to the appropriate service
     if (pathname.startsWith('/quacks')) {
         quackService(req, res);
     } else if (pathname.startsWith('/user')) {
@@ -35,11 +33,9 @@ const server = http.createServer(async (req, res) => {
     } else if (req.method === 'GET' && !pathname.startsWith('/api/') && !res.finished) {
         let servePath;
 
-        // Serve 'login.html' for the root path
         if (pathname === '/') {
             servePath = path.join(__dirname, './screens/login.html');
         } else {
-            // Serve other static files from the 'src' directory
             servePath = path.join(__dirname, '', pathname);
         }
 
@@ -52,7 +48,6 @@ const server = http.createServer(async (req, res) => {
             }
 
             if (stats.isDirectory()) {
-                // If a directory is requested, serve 'index.html' from that directory
                 servePath = path.join(servePath, './screens/index.html');
             }
 

@@ -1,12 +1,12 @@
 const url = require('url');
-const db = require('./userDB'); // Adjust this path as needed
+const db = require('./userDB');
 const bcrypt = require('bcrypt');
 
 async function userService(req, res) {
     const parsedUrl = url.parse(req.url, true);
     const pathname = parsedUrl.pathname;
 
-    // Handle user-related endpoints
+    // Handles user-related endpoints
     if (pathname === '/user/login' && req.method === 'POST') {
         let body = '';
     req.on('data', chunk => {
@@ -15,7 +15,7 @@ async function userService(req, res) {
     req.on('end', async () => {
       try {
         const { email, password } = JSON.parse(body);
-        console.log(`Login attempt with email: ${email} and password: ${password}`); // Log credentials
+        console.log(`Login attempt with email: ${email} and password: ${password}`);
 
         const user = await db.loginUser(email, password);
         if (user) {
@@ -28,7 +28,7 @@ async function userService(req, res) {
           res.end(JSON.stringify({ error: "Invalid credentials" }));
         }
       } catch (error) {
-        console.error('Error in /login:', error.message); // Log errors
+        console.error('Error in /login:', error.message);
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: error.message }));
       }

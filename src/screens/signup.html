@@ -33,7 +33,7 @@
           const id = Math.floor(Math.random() * (max - min + 1)) + min;
           if (password !== confirmPassword) {
             console.error('Passwords do not match.');
-            return; // Early return if passwords do not match
+            return;
           }
       
           try {
@@ -44,11 +44,11 @@
             });
       
             if (response.ok) {
-              // Handle successful signup here
+              // Handles successful signup, Redirects to login page
               console.log('Signup successful');
-              window.location.href = '/'; // Redirect to login page
+              window.location.href = '/';
             } else {
-              // Handle errors (like showing a message to the user)
+              // Handle errors
               const errorData = await response.json();
               console.error('Signup failed:', errorData.error);
             }
