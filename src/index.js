@@ -17,7 +17,7 @@ class QuackApi {
 
   async fetchQuacks() {
     try {
-      const response = await fetch('http://localhost:3000/quacks');
+      const response = await fetch('http://localhost:3000/quacks/quacks');
       const quacks = await response.json();
       const reversedQuacks = quacks.reverse(); 
       this.renderQuacks(reversedQuacks);
@@ -116,7 +116,7 @@ class QuackApi {
   async loginUser(email, password) { 
     console.log('loginUser method called.'); // This should log when loginUser is called
     try {
-      const response = await fetch('http://localhost:3000/login', {
+      const response = await fetch('http://localhost:3000/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -151,7 +151,7 @@ class QuackApi {
     
   
       // Make the POST request to the server
-      const response = await fetch('http://localhost:3000/quacks', {
+      const response = await fetch('http://localhost:3000/quacks/quacks', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -183,7 +183,7 @@ class QuackApi {
 
   async fetchTopQuacks() {
     try {
-      const response = await fetch('http://localhost:3000/top-quacks');
+      const response = await fetch('http://localhost:3000/quacks/top-quacks');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -207,7 +207,7 @@ class QuackApi {
 
   async deleteQuack(quackId) {
     try {
-      const response = await fetch(`http://localhost:3000/delete-quack?id=${quackId}`, {
+      const response = await fetch(`http://localhost:3000/quacks/delete-quack?id=${quackId}`, {
         method: 'DELETE'
       });
   
@@ -223,7 +223,7 @@ class QuackApi {
 
   async incrementLikes(quackId) {
     try {
-      const response = await fetch(`http://localhost:3000/increment-likes?id=${quackId}`, {
+      const response = await fetch(`http://localhost:3000/quacks/increment-likes?id=${quackId}`, {
         method: 'POST'
       });
 
@@ -239,7 +239,7 @@ class QuackApi {
 
   async addComment(quackId, comment) {
     try {
-      const response = await fetch('http://localhost:3000/add-comment', {
+      const response = await fetch('http://localhost:3000/quacks/add-comment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

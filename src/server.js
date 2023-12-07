@@ -2,209 +2,78 @@ const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
-const db = require('./db'); // Ensure this path is correct
-const bcrypt = require('bcrypt'); // Only necessary if you're handling passwords
+const quackService = require('./quackService');
+const userService = require('./userService');
 
 const port = process.env.PORT || 3000;
 
 const mimeType = {
-  '.ico': 'image/x-icon',
-  '.html': 'text/html',
-  '.js': 'text/javascript',
-  '.json': 'application/json',
-  '.css': 'text/css',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.wav': 'audio/wav',
-  '.mp3': 'audio/mpeg',
-  '.svg': 'image/svg+xml',
-  '.pdf': 'application/pdf',
-  '.doc': 'application/msword',
-  // Add other mime types as needed
+    '.ico': 'image/x-icon',
+    '.html': 'text/html',
+    '.js': 'text/javascript',
+    '.json': 'application/json',
+    '.css': 'text/css',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.wav': 'audio/wav',
+    '.mp3': 'audio/mpeg',
+    '.svg': 'image/svg+xml',
+    '.pdf': 'application/pdf',
+    '.doc': 'application/msword',
+    // Add other mime types as needed
 };
 
 const server = http.createServer(async (req, res) => {
-  console.log(`Received request for ${req.url} with method ${req.method}`);
-  const parsedUrl = url.parse(req.url, true);
-  const pathname = parsedUrl.pathname;
+    const parsedUrl = url.parse(req.url, true);
+    const pathname = parsedUrl.pathname;
 
-  // API endpoint logic
-  if (pathname === '/quacks' && req.method === 'GET') {
-    try {
-      const quacks = await db.getAllQuacks();
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(quacks));
-    } catch (error) {
-      res.writeHead(500);
-      res.end(JSON.stringify({ error: error.message }));
-    }
-  } else if (pathname === '/top-quacks' && req.method === 'GET') {
-    try {
-      const topQuacks = await db.getTopFiveQuacks();
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(topQuacks));
-    } catch (error) {
-      res.writeHead(500);
-      res.end(JSON.stringify({ error: error.message }));
-    }
-  } else if (pathname === '/quacks' && req.method === 'POST') {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
-    req.on('end', async () => {
-      try {
-        const quackData = JSON.parse(body);
-        const newQuack = await db.addNewQuack(quackData);
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(newQuack));
-      } catch (error) {
-        res.writeHead(500);
-        res.end(JSON.stringify({ error: error.message }));
-      }
-    });
-  } else if (pathname === '/delete-quack' && req.method === 'DELETE') {
-    const quackId = parsedUrl.query.id;
-    if (!quackId) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: "Missing quackId query parameter" }));
-      return;
-    }
-    try {
-      await db.deletePost(quackId);
-      res.writeHead(204);
-      res.end();
-    } catch (error) {
-      res.writeHead(500);
-      res.end(JSON.stringify({ error: error.message }));
-    } 
-  } else if (pathname === '/increment-likes' && req.method === 'POST') {
-    const quackId = parsedUrl.query.id;
-    if (!quackId) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: "Missing quackId query parameter" }));
-      return;
-    }
-    try {
-      const updatedQuack = await db.incrementLikes(quackId);
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(updatedQuack));
-    } catch (error) {
-      res.writeHead(500);
-      res.end(JSON.stringify({ error: error.message }));
-    }
-  } else if (pathname === '/login' && req.method === 'POST') {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
-    req.on('end', async () => {
-      try {
-        const { email, password } = JSON.parse(body);
-        console.log(`Login attempt with email: ${email} and password: ${password}`); // Log credentials
+    // Route API requests to the appropriate service
+    if (pathname.startsWith('/quacks')) {
+        quackService(req, res);
+    } else if (pathname.startsWith('/user')) {
+        userService(req, res);
+    } else if (req.method === 'GET' && !pathname.startsWith('/api/') && !res.finished) {
+        let servePath;
 
-        const user = await db.loginUser(email, password);
-        if (user) {
-          console.log(`Login successful for user: ${email}`);
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: true, user }));
+        // Serve 'login.html' for the root path
+        if (pathname === '/') {
+            servePath = path.join(__dirname, './screens/login.html');
         } else {
-          console.log(`Login failed for user: ${email}`);
-          res.writeHead(401, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: "Invalid credentials" }));
+            // Serve other static files from the 'src' directory
+            servePath = path.join(__dirname, '', pathname);
         }
-      } catch (error) {
-        console.error('Error in /login:', error.message); // Log errors
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: error.message }));
-      }
-    });
-  }else if (pathname === '/add-comment' && req.method === 'POST') {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
-    req.on('end', async () => {
-      try {
-        const { quackId, comment } = JSON.parse(body);
-        const result = await db.addComment(quackId, comment);
-        if (result) {
-          res.writeHead(201, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ message: "comment added successfully" }));
-        } else {
-          res.writeHead(400, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: "adding failed" }));
-        }
-      } catch (error) {
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: error.message }));
-      }
-    });
 
-  } else if (pathname === '/register' && req.method === 'POST') {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
-    req.on('end', async () => {
-      try {
-        const { username, email, password, id } = JSON.parse(body);
-        const result = await db.registerUser( username, email, password, id );
-        if (result) {
-          res.writeHead(201, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ message: "Registration successful" }));
-        } else {
-          res.writeHead(400, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: "Registration failed" }));
-        }
-      } catch (error) {
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: error.message }));
-      }
-    });
-  }
-   else {
-    // Static file serving logic for GET requests only
-if (req.method === 'GET' && !pathname.startsWith('/api/') && !res.finished) {
-  let servePath;
-  
-  // Serve 'login.html' for the root path
-  if (pathname === '/') {
-    servePath = path.join(__dirname, './screens/login.html');
-  } else {
-    // Serve other static files from the 'src' directory
-    servePath = path.join(__dirname, '', pathname);
-  }
+        fs.stat(servePath, (err, stats) => {
+            if (err) {
+                console.log(`File not found: ${servePath}`);
+                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.end(`File not found: ${pathname}`);
+                return;
+            }
 
-  fs.stat(servePath, (err, stats) => {
-    if (err) {
-      console.log(`File not found: ${servePath}`);
-      res.writeHead(404, { 'Content-Type': 'text/plain' });
-      res.end(`File not found: ${pathname}`);
-      return;
+            if (stats.isDirectory()) {
+                // If a directory is requested, serve 'index.html' from that directory
+                servePath = path.join(servePath, './screens/index.html');
+            }
+
+            fs.readFile(servePath, (readErr, data) => {
+                if (readErr) {
+                    res.writeHead(500, { 'Content-Type': 'text/plain' });
+                    res.end(`Server error: ${readErr.message}`);
+                } else {
+                    // Determine the content type based on the file extension
+                    const ext = path.parse(servePath).ext;
+                    res.writeHead(200, { 'Content-Type': mimeType[ext] || 'text/plain' });
+                    res.end(data);
+                }
+            });
+        });
+    } else {
+        res.writeHead(404);
+        res.end('Not Found');
     }
-
-    if (stats.isDirectory()) {
-      // If a directory is requested, serve 'index.html' from that directory
-      servePath = path.join(servePath, './screens/index.html');
-    }
-
-    fs.readFile(servePath, (readErr, data) => {
-      if (readErr) {
-        res.writeHead(500, { 'Content-Type': 'text/plain' });
-        res.end(`Server error: ${readErr.message}`);
-      } else {
-        // Determine the content type based on the file extension
-        const ext = path.parse(servePath).ext;
-        res.writeHead(200, { 'Content-Type': mimeType[ext] || 'text/plain' });
-        res.end(data);
-      }
-    });
-  });
-}
-  }
 });
 
 server.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+    console.log(`Server running on port ${port}`);
 });
